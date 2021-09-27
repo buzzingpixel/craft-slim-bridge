@@ -1,0 +1,20 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PhpCSValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="CODING_STANDARD" value="Doctrine" />
+      <option name="EXTENSIONS" value="php" />
+    </inspection_tool>
+    <inspection_tool class="PhpStanGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="memoryLimit" value="4G" />
+      <option name="level" value="8" />
+      <option name="config" value="$PROJECT_DIR$/phpstan.neon" />
+    </inspection_tool>
+    <inspection_tool class="PsalmGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="config" value="$PROJECT_DIR$/psalm.xml" />
+      <option name="showInfo" value="true" />
+      <option name="findUnusedCode" value="true" />
+      <option name="findUnusedSuppress" value="true" />
+    </inspection_tool>
+  </profile>
+</component>
