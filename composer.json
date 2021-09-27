@@ -1,0 +1,43 @@
+{
+    "name": "buzzingpixel/craft-slim-bridge",
+    "description": "Bridge for using Slim with Craft",
+    "type": "craft-plugin",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "TJ Draper",
+            "email": "tj@buzzingpixel.com",
+            "homepage": "https://buzzingpixel.com"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "slim/slim": "^4.7"
+    },
+    "require-dev": {
+        "craftcms/cms": "^3.7",
+        "doctrine/coding-standard": "^9",
+        "friendsofphp/php-cs-fixer": "^2.18",
+        "phpstan/phpstan": "^0.12.69",
+        "phpstan/phpstan-deprecation-rules": "^0.12.6",
+        "phpstan/phpstan-strict-rules": "^0.12.9",
+        "squizlabs/php_codesniffer": "^3.5",
+        "vimeo/psalm": "^4.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "BuzzingPixel\\SlimBridge\\": "src"
+        }
+    },
+    "config": {
+        "bin-compat": "full",
+        "sort-packages": true
+    },
+    "extra": {
+        "name": "Slim Bridge",
+        "handle": "slim-bridge",
+        "developer": "BuzzingPixel, LLC",
+        "developerUrl": "https://buzzingpixel.com",
+        "class": "BuzzingPixel\\SlimBridge\\Craft\\SlimBridgePlugin"
+    }
+}
