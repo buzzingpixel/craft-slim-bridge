@@ -154,6 +154,9 @@
       <path value="$PROJECT_DIR$/vendor/codedungeon/php-cli-colors" />
       <path value="$PROJECT_DIR$/vendor/hassankhan/config" />
       <path value="$PROJECT_DIR$/vendor/2bj/phanybar" />
+      <path value="$PROJECT_DIR$/vendor/php-di/invoker" />
+      <path value="$PROJECT_DIR$/vendor/php-di/php-di" />
+      <path value="$PROJECT_DIR$/vendor/php-di/phpdoc-reader" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
