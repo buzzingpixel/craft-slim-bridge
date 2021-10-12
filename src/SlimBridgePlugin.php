@@ -20,6 +20,7 @@ use yii\base\Event;
 use function assert;
 
 /**
+ * @codeCoverageIgnore
  * @psalm-suppress PropertyNotSetInConstructor
  */
 class SlimBridgePlugin extends Plugin
