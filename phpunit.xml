@@ -2,24 +2,32 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
          bootstrap="testBootstrap.php"
+         cacheResultFile=".phpunit.cache/test-results"
          executionOrder="depends,defects"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
-         beStrictAboutTestsThatDoNotTestAnything="true"
+         convertDeprecationsToExceptions="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         verbose="true"
          colors="true"
          printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
-         verbose="true"
 >
-    <coverage>
+    <testsuites>
+        <testsuite name="default">
+            <directory>src</directory>
+        </testsuite>
+    </testsuites>
+    <coverage
+        cacheDirectory=".phpunit.cache/code-coverage-cache"
+        processUncoveredFiles="true"
+    >
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
         <report>
-            <html outputDirectory="code_coverage/" lowUpperBound="35" highLowerBound="70"/>
+            <html outputDirectory=".phpunit.cache/code-coverage/" lowUpperBound="35" highLowerBound="70"/>
             <text outputFile="php://stdout" showOnlySummary="true"/>
         </report>
     </coverage>
-    <testsuites>
-        <testsuite name="Craft Slim Bridge">
-            <directory suffix="Test.php">src</directory>
-        </testsuite>
-    </testsuites>
-    <logging/>
 </phpunit>
