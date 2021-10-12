@@ -25,9 +25,7 @@ class RouteHandlerController extends Controller
         $module,
         $config,
         private SlimAppFactory $slimAppFactory,
-        private RetrieveContainer $retrieveContainer,
         private ServerRequestFactory $serverRequestFactory,
-        private RetrieveAppCreatedCallback $retrieveAppCreatedCallback,
     ) {
         /** @psalm-suppress MixedArgument */
         parent::__construct($id, $module, $config);
@@ -38,13 +36,7 @@ class RouteHandlerController extends Controller
      */
     public function actionIndex(): Response
     {
-        $app = $this->slimAppFactory->make(
-            container: $this->retrieveContainer->retrieve()
-        );
-
-        $this->retrieveAppCreatedCallback->retrieve()($app);
-
-        $responseInterface = $app->handle(
+        $responseInterface = $this->slimAppFactory->make()->handle(
             $this->serverRequestFactory->make()
         );
 

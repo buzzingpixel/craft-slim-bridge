@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace BuzzingPixel\SlimBridge;
 
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 use Slim\Psr7\Stream;
-use stdClass;
 use Yii;
 use yii\base\Application;
 use yii\base\InvalidConfigException;
@@ -89,37 +87,13 @@ class RouteHandlerControllerTest extends TestCase
             ->with(self::equalTo($serverRequestStub))
             ->willReturn($responseInterfaceStub);
 
-        $callbackStorage             = new stdClass();
-        $callbackStorage->hasBeenRun = false;
-
-        $callBackSpy = static function ($app) use (
-            $appSpy,
-            $callbackStorage,
-        ): void {
-            $callbackStorage->hasBeenRun = true;
-
-            self::assertSame($appSpy, $app);
-        };
-
-        $containerStub = $this->createMock(
-            ContainerInterface::class
-        );
-
         $slimAppFactorySpy = $this->createMock(
             SlimAppFactory::class,
         );
 
         $slimAppFactorySpy->expects(self::once())
             ->method('make')
-            ->with(self::equalTo($containerStub))
             ->willReturn($appSpy);
-
-        $retrieveContainerStub = $this->createMock(
-            RetrieveContainer::class,
-        );
-
-        $retrieveContainerStub->method('retrieve')
-            ->willReturn($containerStub);
 
         $serverRequestFactoryStub = $this->createMock(
             ServerRequestFactory::class,
@@ -128,22 +102,13 @@ class RouteHandlerControllerTest extends TestCase
         $serverRequestFactoryStub->method('make')
             ->willReturn($serverRequestStub);
 
-        $retrieveAppCreatedCallbackStub = $this->createMock(
-            RetrieveAppCreatedCallback::class,
-        );
-
-        $retrieveAppCreatedCallbackStub->method('retrieve')
-            ->willReturn($callBackSpy);
-
         $instance = new RouteHandlerController(
             id: 'test-id',
             /** @phpstan-ignore-next-line */
             module: null,
             config: [],
             slimAppFactory: $slimAppFactorySpy,
-            retrieveContainer: $retrieveContainerStub,
             serverRequestFactory: $serverRequestFactoryStub,
-            retrieveAppCreatedCallback: $retrieveAppCreatedCallbackStub,
         );
 
         $response = $instance->actionIndex();
@@ -180,7 +145,5 @@ class RouteHandlerControllerTest extends TestCase
             'test-body-string',
             $response->content,
         );
-
-        self::assertTrue($callbackStorage->hasBeenRun);
     }
 }
