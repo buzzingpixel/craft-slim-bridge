@@ -28,8 +28,10 @@ class RetrieveAppCreatedCallbackTest extends TestCase
 
     public function testRetrieve(): void
     {
+        // @codeCoverageIgnoreStart
         $callableStub = static function (): void {
         };
+        // @codeCoverageIgnoreEnd
 
         $configSpy = $this->createMock(
             Config::class,
