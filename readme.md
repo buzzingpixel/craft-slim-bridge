@@ -8,7 +8,7 @@ I really like working in [Slim](https://www.slimframework.com), with [FastRoute]
 
 1. In your craft project, run `composer require buzzingpixel/craft-slim-bridge`
 2. Then run `php craft plugin/install slim-bridge`
-3. Create a config file in your `/config` directory named `slim-bridge.php`. See Config section below for configuration.
+3. Create a config file in your `/config` directory named `slim-bridge.php`. See [Config](#config) section below for configuration.
 4. Add the following catch-all route as the last route in your craft `routes.php` file:
     - `'<path:.*>' => 'slim-bridge/route-handler/index',`
 5. For Category or Entry routing through Slim, use the following format in the site settings `template` field to route to custom class's `__invoke` method:
