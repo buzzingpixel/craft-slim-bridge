@@ -44,7 +44,7 @@ class CallbackForNoRoutingCallbackTest extends TestCase
 
         self::assertSame(
             $elementStub,
-            $routeParams->getParam(name: 'element'),
+            $routeParams->params()['element'],
         );
     }
 }
