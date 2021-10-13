@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BuzzingPixel\SlimBridge\ElementSetRoute\SetRouteFromParsed;
 
 use BuzzingPixel\SlimBridge\ElementSetRoute\RouteParsing\ParsedRoute;
+use BuzzingPixel\SlimBridge\ElementSetRoute\SetRouteFromParsed\SetRouteFirstRunCallback\SetRouteFirstRunCallbackFactory;
 use BuzzingPixel\SlimBridge\SlimAppFactory;
 use craft\events\SetElementRouteEvent;
 
@@ -12,6 +13,7 @@ class SetRouteFromParsedFactory
 {
     public function __construct(
         private SlimAppFactory $slimAppFactory,
+        private SetRouteFirstRunCallbackFactory $setRouteFirstRunCallbackFactory,
     ) {
     }
 
@@ -24,6 +26,7 @@ class SetRouteFromParsedFactory
                 event: $event,
                 parsedRoute: $parsedRoute,
                 slimAppFactory: $this->slimAppFactory,
+                setRouteFirstRunCallbackFactory: $this->setRouteFirstRunCallbackFactory,
             );
         }
 
