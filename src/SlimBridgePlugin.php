@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\SlimBridge;
 
-use BuzzingPixel\SlimBridge\ElementSetRoute\SetRouteEvent;
+use BuzzingPixel\SlimBridge\ElementSetRoute\SetRouteFromEvent;
 use Craft;
 use craft\base\Element;
 use craft\base\Plugin;
@@ -74,13 +74,15 @@ class SlimBridgePlugin extends Plugin
                  * @psalm-suppress UndefinedClass
                  * @phpstan-ignore-next-line
                  */
-                $elementSetRoute = Yii::$container->get(
-                    SetRouteEvent::class,
+                $setRouteFromEvent = Yii::$container->get(
+                    SetRouteFromEvent::class,
                 );
 
-                assert($elementSetRoute instanceof SetRouteEvent);
+                assert(
+                    $setRouteFromEvent instanceof SetRouteFromEvent
+                );
 
-                $elementSetRoute->set(event: $event);
+                $setRouteFromEvent->set(event: $event);
             }
         );
 

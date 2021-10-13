@@ -6,7 +6,7 @@ namespace BuzzingPixel\SlimBridge\ElementSetRoute;
 
 use craft\events\SetElementRouteEvent;
 
-class SetRouteEvent
+class SetRouteFromEvent
 {
     public function __construct(
         private SetRouteFactory $setRouteFactory,
