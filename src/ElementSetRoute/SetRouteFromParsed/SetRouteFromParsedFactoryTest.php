@@ -7,6 +7,7 @@ namespace BuzzingPixel\SlimBridge\ElementSetRoute\SetRouteFromParsed;
 use BuzzingPixel\SlimBridge\ElementSetRoute\RouteParsing\ParsedRoute;
 use BuzzingPixel\SlimBridge\ElementSetRoute\SetRouteFromParsed\SetRouteFirstRunCallback\SetRouteFirstRunCallbackFactory;
 use BuzzingPixel\SlimBridge\SlimAppFactory;
+use craft\base\Element;
 use craft\events\SetElementRouteEvent;
 use PHPUnit\Framework\TestCase;
 
@@ -46,16 +47,22 @@ class SetRouteFromParsedFactoryTest extends TestCase
         );
     }
 
-    public function testMakeWhenMatch(): void
+    public function testMakeWhenMatchAndUriIsNormal(): void
     {
         $parsedRouteStub = new ParsedRoute(
             isMatch: true,
             routeString: 'testRouteString',
         );
 
+        $elementStub = $this->createMock(Element::class);
+
+        $elementStub->uri = 'test/uri';
+
         $eventStub = $this->createMock(
             SetElementRouteEvent::class,
         );
+
+        $eventStub->sender = $elementStub;
 
         $slimAppFactoryStub = $this->createMock(
             SlimAppFactory::class,
@@ -72,6 +79,84 @@ class SetRouteFromParsedFactoryTest extends TestCase
 
         self::assertInstanceOf(
             SetRoute::class,
+            $factory->make(
+                parsedRoute: $parsedRouteStub,
+                event: $eventStub,
+            ),
+        );
+    }
+
+    public function testMakeWhenUriIsHome(): void
+    {
+        $parsedRouteStub = new ParsedRoute(
+            isMatch: true,
+            routeString: 'testRouteString',
+        );
+
+        $elementStub = $this->createMock(Element::class);
+
+        $elementStub->uri = '__home__';
+
+        $eventStub = $this->createMock(
+            SetElementRouteEvent::class,
+        );
+
+        $eventStub->sender = $elementStub;
+
+        $slimAppFactoryStub = $this->createMock(
+            SlimAppFactory::class,
+        );
+
+        $setRouteFirstRunCallbackFactoryStub = $this->createMock(
+            SetRouteFirstRunCallbackFactory::class,
+        );
+
+        $factory = new SetRouteFromParsedFactory(
+            slimAppFactory: $slimAppFactoryStub,
+            setRouteFirstRunCallbackFactory: $setRouteFirstRunCallbackFactoryStub,
+        );
+
+        self::assertInstanceOf(
+            SetRoute::class,
+            $factory->make(
+                parsedRoute: $parsedRouteStub,
+                event: $eventStub,
+            ),
+        );
+    }
+
+    public function testMakeWhenUriStartsWithUnderscore(): void
+    {
+        $parsedRouteStub = new ParsedRoute(
+            isMatch: true,
+            routeString: 'testRouteString',
+        );
+
+        $elementStub = $this->createMock(Element::class);
+
+        $elementStub->uri = '__404__';
+
+        $eventStub = $this->createMock(
+            SetElementRouteEvent::class,
+        );
+
+        $eventStub->sender = $elementStub;
+
+        $slimAppFactoryStub = $this->createMock(
+            SlimAppFactory::class,
+        );
+
+        $setRouteFirstRunCallbackFactoryStub = $this->createMock(
+            SetRouteFirstRunCallbackFactory::class,
+        );
+
+        $factory = new SetRouteFromParsedFactory(
+            slimAppFactory: $slimAppFactoryStub,
+            setRouteFirstRunCallbackFactory: $setRouteFirstRunCallbackFactoryStub,
+        );
+
+        self::assertInstanceOf(
+            SetRouteAsNotFound::class,
             $factory->make(
                 parsedRoute: $parsedRouteStub,
                 event: $eventStub,

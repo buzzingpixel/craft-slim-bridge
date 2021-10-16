@@ -19,6 +19,8 @@ use function ltrim;
 
 class CallbackForRoutingCallback implements SetRouteFirstRunCallbackContract
 {
+    private const SPECIAL_URI_MAP = ['/__home__' => '/'];
+
     /**
      * @phpstan-ignore-next-line
      */
@@ -29,6 +31,11 @@ class CallbackForRoutingCallback implements SetRouteFirstRunCallbackContract
     ) {
     }
 
+    private function getFromMap(string $uri): string
+    {
+        return self::SPECIAL_URI_MAP[$uri] ?? $uri;
+    }
+
     public function call(App $app): void
     {
         $routeString = $this->parsedRoute->routeString();
@@ -37,6 +44,8 @@ class CallbackForRoutingCallback implements SetRouteFirstRunCallbackContract
             (string) $this->element->uri,
             '/',
         );
+
+        $uri = $this->getFromMap($uri);
 
         RouteParams::addParam(name: 'element', val: $this->element);
 
