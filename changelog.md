@@ -5,10 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.1.2 - 2021-10-16
+### Fixed
+
+- Fixed an issue where not every code path handled special URIs.
+
 ## 1.1.1 - 2021-10-16
 ### Fixed
 
-- Fixed an issue with handling special URIs like `__home__` and `__404__`
+- Fixed an issue with handling special URIs like `__home__` and `__404__`.
 
 ## 1.1.0 - 2021-10-13
 ### Added

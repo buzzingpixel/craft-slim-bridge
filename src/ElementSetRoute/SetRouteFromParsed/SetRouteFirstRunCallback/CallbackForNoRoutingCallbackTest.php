@@ -13,7 +13,7 @@ use Slim\App;
 /** @psalm-suppress PropertyNotSetInConstructor */
 class CallbackForNoRoutingCallbackTest extends TestCase
 {
-    public function testCall(): void
+    public function testCallWhenNoSpecialUrl(): void
     {
         $elementStub = $this->createMock(Element::class);
 
@@ -30,6 +30,41 @@ class CallbackForNoRoutingCallbackTest extends TestCase
             ->method('get')
             ->with(
                 self::equalTo('/test/uri'),
+                self::equalTo('testRouteString')
+            );
+
+        $callback = new CallbackForNoRoutingCallback(
+            element: $elementStub,
+            parsedRoute: $parsedRouteStub,
+        );
+
+        $callback->call($appSpy);
+
+        $routeParams = new RouteParams();
+
+        self::assertSame(
+            $elementStub,
+            $routeParams->params()['element'],
+        );
+    }
+
+    public function testCallWhenHomeUrl(): void
+    {
+        $elementStub = $this->createMock(Element::class);
+
+        $elementStub->uri = '__home__';
+
+        $parsedRouteStub = new ParsedRoute(
+            isMatch: true,
+            routeString: 'testRouteString',
+        );
+
+        $appSpy = $this->createMock(App::class);
+
+        $appSpy->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo('/'),
                 self::equalTo('testRouteString')
             );
 

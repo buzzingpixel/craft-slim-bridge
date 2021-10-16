@@ -14,7 +14,7 @@ use Slim\Interfaces\RouteInterface;
 /** @psalm-suppress PropertyNotSetInConstructor */
 class CallbackForRoutingCallbackTest extends TestCase
 {
-    public function testCall(): void
+    public function testCallWhenNoSpecialUrl(): void
     {
         $elementStub = $this->createMock(Element::class);
 
@@ -40,6 +40,51 @@ class CallbackForRoutingCallbackTest extends TestCase
             ->method('get')
             ->with(
                 self::equalTo('/test/uri'),
+                self::equalTo($parsedRouteStub->routeString())
+            )
+            ->willReturn($routeSpy);
+
+        $callback = new CallbackForRoutingCallback(
+            element: $elementStub,
+            parsedRoute: $parsedRouteStub,
+        );
+
+        $callback->call($appSpy);
+
+        $routeParams = new RouteParams();
+
+        self::assertSame(
+            $elementStub,
+            $routeParams->getParam(name: 'element'),
+        );
+    }
+
+    public function testCallWhenHomeUrl(): void
+    {
+        $elementStub = $this->createMock(Element::class);
+
+        $elementStub->uri = '__home__';
+
+        $parsedRouteStub = new ParsedRoute(
+            isMatch: true,
+            routeString: RoutingCallbackContractImplementationForTesting::class,
+        );
+
+        $routeSpy = $this->createMock(RouteInterface::class);
+
+        $routeSpy->expects(self::once())
+            ->method('setArgument')
+            ->with(
+                self::equalTo('testName'),
+                self::equalTo('testValue'),
+            );
+
+        $appSpy = $this->createMock(App::class);
+
+        $appSpy->expects(self::once())
+            ->method('get')
+            ->with(
+                self::equalTo('/'),
                 self::equalTo($parsedRouteStub->routeString())
             )
             ->willReturn($routeSpy);
