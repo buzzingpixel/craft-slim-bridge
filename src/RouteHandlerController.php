@@ -7,6 +7,7 @@ namespace BuzzingPixel\SlimBridge;
 use craft\web\Controller;
 use craft\web\Response;
 use yii\base\InvalidConfigException;
+use yii\web\Response as YiiResponse;
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingAnyTypeHint
 // phpcs:disable PEAR.Functions.ValidDefaultValue.NotAtEnd
@@ -50,6 +51,8 @@ class RouteHandlerController extends Controller
                 $response->headers->add($name, $value);
             }
         }
+
+        $response->format = YiiResponse::FORMAT_RAW;
 
         $response->content = (string) $responseInterface->getBody();
 

@@ -14,6 +14,7 @@ use yii\base\Application;
 use yii\base\InvalidConfigException;
 use yii\base\Request;
 use yii\base\Response;
+use yii\web\Response as YiiResponse;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
 class RouteHandlerControllerTest extends TestCase
@@ -144,6 +145,11 @@ class RouteHandlerControllerTest extends TestCase
         self::assertSame(
             'test-body-string',
             $response->content,
+        );
+
+        self::assertSame(
+            YiiResponse::FORMAT_RAW,
+            $response->format,
         );
     }
 }
