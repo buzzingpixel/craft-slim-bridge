@@ -12,6 +12,7 @@ use craft\events\SetElementRouteEvent;
 use craft\services\Categories;
 use craft\services\Config;
 use craft\services\Sites;
+use craft\web\Application;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\Psr7\Factory\ResponseFactory;
 use Yii;
@@ -64,6 +65,16 @@ class SlimBridgePlugin extends Plugin
             Sites::class,
             /** @phpstan-ignore-next-line */
             Craft::$app->getSites(),
+        );
+
+        /**
+         * @psalm-suppress UndefinedClass
+         * @phpstan-ignore-next-line
+         */
+        Yii::$container->set(
+            Application::class,
+            /** @phpstan-ignore-next-line */
+            Craft::$app,
         );
 
         Event::on(

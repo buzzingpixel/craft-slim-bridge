@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BuzzingPixel\SlimBridge;
 
+use craft\web\Application;
 use craft\web\Controller;
 use craft\web\Response;
 use yii\base\InvalidConfigException;
@@ -27,6 +28,7 @@ class RouteHandlerController extends Controller
         $config,
         private SlimAppFactory $slimAppFactory,
         private ServerRequestFactory $serverRequestFactory,
+        private Application $craftApp,
     ) {
         /** @psalm-suppress MixedArgument */
         parent::__construct($id, $module, $config);
@@ -50,6 +52,12 @@ class RouteHandlerController extends Controller
                 /** @psalm-suppress MixedArgumentTypeCoercion */
                 $response->headers->add($name, $value);
             }
+        }
+
+        $cookies = $this->craftApp->getResponse()->getCookies();
+
+        foreach ($cookies->toArray() as $cookie) {
+            $response->getCookies()->add($cookie);
         }
 
         $response->format = YiiResponse::FORMAT_RAW;
