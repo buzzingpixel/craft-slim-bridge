@@ -21,11 +21,7 @@ use function assert;
 
 class SetRouteForEntry implements SetRouteContract
 {
-    /**
-     * @phpstan-ignore-next-line
-     */
     public function __construct(
-        /** @phpstan-ignore-next-line */
         private Entry $entry,
         private Sites $sitesService,
         private RouteParser $routeParser,
@@ -51,7 +47,6 @@ class SetRouteForEntry implements SetRouteContract
             ) => $s->siteId === $currentSiteId,
         ))[0];
 
-        /** @phpstan-ignore-next-line */
         assert($thisSiteSettings instanceof Section_SiteSettings);
 
         $this->setRouteFromParsedFactory->make(

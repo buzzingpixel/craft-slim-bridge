@@ -21,11 +21,7 @@ class CallbackForRoutingCallback implements SetRouteFirstRunCallbackContract
 {
     private const SPECIAL_URI_MAP = ['/__home__' => '/'];
 
-    /**
-     * @phpstan-ignore-next-line
-     */
     public function __construct(
-        /** @phpstan-ignore-next-line */
         private Element $element,
         private ParsedRoute $parsedRoute,
     ) {

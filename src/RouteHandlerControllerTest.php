@@ -14,6 +14,8 @@ use yii\base\Application;
 use yii\base\InvalidConfigException;
 use yii\base\Request;
 use yii\base\Response;
+use yii\web\Cookie;
+use yii\web\CookieCollection;
 use yii\web\Response as YiiResponse;
 
 /** @psalm-suppress PropertyNotSetInConstructor */
@@ -103,6 +105,28 @@ class RouteHandlerControllerTest extends TestCase
         $serverRequestFactoryStub->method('make')
             ->willReturn($serverRequestStub);
 
+        $craftResponseStub = $this->createMock(
+            \craft\web\Response::class,
+        );
+
+        $testCookie = new Cookie();
+
+        $testCookie->name = 'test-cookie-foo';
+
+        $testCookieCollection = new CookieCollection();
+
+        $testCookieCollection->add($testCookie);
+
+        $craftResponseStub->method('getCookies')
+            ->willReturn($testCookieCollection);
+
+        $craftAppStub = $this->createMock(
+            \craft\web\Application::class,
+        );
+
+        $craftAppStub->method('getResponse')
+            ->willReturn($craftResponseStub);
+
         $instance = new RouteHandlerController(
             id: 'test-id',
             /** @phpstan-ignore-next-line */
@@ -110,6 +134,7 @@ class RouteHandlerControllerTest extends TestCase
             config: [],
             slimAppFactory: $slimAppFactorySpy,
             serverRequestFactory: $serverRequestFactoryStub,
+            craftApp: $craftAppStub,
         );
 
         $response = $instance->actionIndex();
@@ -150,6 +175,15 @@ class RouteHandlerControllerTest extends TestCase
         self::assertSame(
             YiiResponse::FORMAT_RAW,
             $response->format,
+        );
+
+        $responseCookieArray = $response->getCookies()->toArray();
+
+        self::assertCount(1, $responseCookieArray);
+
+        self::assertSame(
+            $testCookie,
+            $responseCookieArray['test-cookie-foo'],
         );
     }
 }

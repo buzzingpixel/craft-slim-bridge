@@ -43,7 +43,6 @@ class RetrieveContainerTest extends TestCase
             'The config file "slim-bridge.php" must have a config ' .
                 'item with the key `containerInterface` that returns an ' .
                 'implementation of ' . ContainerInterface::class,
-            /** @phpstan-ignore-next-line  */
             $exception->getMessage(),
         );
     }

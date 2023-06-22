@@ -9,8 +9,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpNotFoundException;
 use Throwable;
 
-use function assert;
-
 /** @psalm-suppress PropertyNotSetInConstructor */
 class Route404HandlerTest extends TestCase
 {
@@ -34,8 +32,6 @@ class Route404HandlerTest extends TestCase
             HttpNotFoundException::class,
             $exception,
         );
-
-        assert($exception instanceof HttpNotFoundException);
 
         self::assertSame(
             $serverRequestStub,

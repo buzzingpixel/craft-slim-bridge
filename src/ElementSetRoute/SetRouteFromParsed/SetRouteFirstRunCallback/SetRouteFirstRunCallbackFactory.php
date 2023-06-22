@@ -14,9 +14,6 @@ use function is_array;
 
 class SetRouteFirstRunCallbackFactory
 {
-    /**
-     * @phpstan-ignore-next-line
-     */
     public function make(
         Element $element,
         ParsedRoute $parsedRoute,

@@ -21,11 +21,7 @@ use function assert;
 
 class SetRouteForCategory implements SetRouteContract
 {
-    /**
-     * @phpstan-ignore-next-line
-     */
     public function __construct(
-        /** @phpstan-ignore-next-line */
         private Category $category,
         private Sites $sitesService,
         private RouteParser $routeParser,
@@ -53,9 +49,7 @@ class SetRouteForCategory implements SetRouteContract
             ) => $s->siteId === $currentSiteId,
         ))[0];
 
-        /** @phpstan-ignore-next-line */
         assert(
-            /** @phpstan-ignore-next-line */
             $thisSiteSettings instanceof CategoryGroup_SiteSettings
         );
 
