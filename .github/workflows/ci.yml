@@ -12,8 +12,6 @@ jobs:
         run: XDEBUG_MODE=coverage ./vendor/bin/phpunit
       - name: Run PHPStan
         run: php -d memory_limit=4G ./vendor/bin/phpstan analyse src --no-progress
-      - name: Run Psalm
-        run: php -d memory_limit=4G ./vendor/bin/psalm
       - name: Run phppcs
         run: php -d memory_limit=4G ./vendor/bin/phpcs
       - name: Run php-cs-fixer
