@@ -97,9 +97,12 @@ class SlimBridgePlugin extends Plugin
             }
         );
 
-        $this->controllerMap = [
-            'route-handler' => RouteHandlerController::class,
-        ];
+        /** @phpstan-ignore-next-line */
+        if (Craft::$app instanceof Application) {
+            $this->controllerMap = [
+                'route-handler' => RouteHandlerController::class,
+            ];
+        }
 
         parent::init();
     }
